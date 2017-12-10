@@ -296,10 +296,10 @@ def train_models(dataset, lr, batch_size, max_epoch, verbose=2, return_model=Fal
 # batch size : 32
 # CARE: The image model is overfits with parameters used here
 
-e = 1
-model = train_models((X_angles, y_train, X_b, X_images), 5e-04, 32, e, 1, return_model=True)
-plt.plot(history.history['acc'])
-plt.plot(history.history['val_acc'])
+e = 200
+history = train_models((X_angles, y_train, X_b, X_images), 5e-04, 32, e, 1, return_model=True)
+plt.plot(history['acc'])
+plt.plot(history['val_acc'])
 plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
@@ -309,8 +309,8 @@ plt.clf()
 
 
 # summarize history for loss
-plt.plot(history.history['loss'])
-plt.plot(history.history['val_loss'])
+plt.plot(history['loss'])
+plt.plot(history['val_loss'])
 plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
