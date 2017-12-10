@@ -198,11 +198,11 @@ def train_model(model, batch_size, epochs, checkpoint_name, X_train, y_train, ve
     callbacks = [ModelCheckpoint(checkpoint_name, save_best_only=True, monitor='val_loss')]
     try:
         if val_data is None:
-            model.fit(X_train, y_train, epochs=epochs, validation_split=val_split,
+            history = model.fit(X_train, y_train, epochs=epochs, validation_split=val_split,
                       batch_size=batch_size, callbacks=callbacks, verbose=verbose, shuffle=True)
         else:
             x_val, y_val = val_data
-            model.fit(X_train, y_train, epochs=epochs, validation_data=[x_val, y_val],
+            history = model.fit(X_train, y_train, epochs=epochs, validation_data=[x_val, y_val],
                       batch_size=batch_size, callbacks=callbacks, verbose=verbose, shuffle=True)
     except KeyboardInterrupt:
         if verbose > 0:
@@ -210,7 +210,7 @@ def train_model(model, batch_size, epochs, checkpoint_name, X_train, y_train, ve
     if verbose > 0:
         print('Loading model')
     model.load_weights(filepath=checkpoint_name)
-    return model
+    return model,history
 
 def get_angular_status(angle, x, x_a):
     if angle:
@@ -228,7 +228,7 @@ def gen_model_weights(angle, lr, decay, channels, relu, batch_size, epochs, path
     if only_load:
         model.load_weights(path_name)
         return model, partial_model
-    model = train_model(model, batch_size, epochs, path_name,
+    model,history = train_model(model, batch_size, epochs, path_name,
                            get_angular_status(angle, X_train, X_angle_train), y_train, verbose=verbose)
 
     if verbose > 0:
@@ -240,7 +240,7 @@ def gen_model_weights(angle, lr, decay, channels, relu, batch_size, epochs, path
 
         print('Val/Train Loss:', str(loss_val) + '/' + str(loss_train), \
             'Val/Train Acc:', str(acc_val) + '/' + str(acc_train))
-    return model, partial_model
+    return model, partial_model, history
 
 
 # Train all 3 models
@@ -257,14 +257,14 @@ def train_models(dataset, lr, batch_size, max_epoch, verbose=2, return_model=Fal
         if verbose > 0:
             print('Training bandwidth network')
         data_b1 = (X_b, X_angles, y_train, X_b_val, X_angles_val, y_val)
-        model_b, model_b_cut = gen_model_weights(angle_b, lr, 0, 3, 'relu', batch_size, max_epoch, 'model_b',
+        model_b, model_b_cut, history = gen_model_weights(angle_b, lr, 0, 3, 'relu', batch_size, max_epoch, 'model_b',
                                              data_b1, only_load=load_b, verbose=verbose)
 
     if train_img:
         if verbose > 0:
             print('Training image network')
         data_images = (X_images, X_angles, y_train, X_b_val, X_angles_val, y_val)
-        model_images, model_images_cut = gen_model_weights(angle_images, lr, 0, 3, 'relu', batch_size, max_epoch, 'model_img',
+        model_images, model_images_cut, history = gen_model_weights(angle_images, lr, 0, 3, 'relu', batch_size, max_epoch, 'model_img',
                                                        data_images, only_load=load_img, verbose=verbose)
 
     if train_total:
@@ -275,7 +275,7 @@ def train_models(dataset, lr, batch_size, max_epoch, verbose=2, return_model=Fal
         common_y_val = y_val
         if verbose > 0:
             print('Training common network')
-        common_model = train_model(common_model, batch_size, max_epoch, 'common_check', common_x_train,
+        common_model, history = train_model(common_model, batch_size, max_epoch, 'common_check', common_x_train,
                            common_y_train, verbose=verbose, val_split=0.2)
 
         loss_val, acc_val = common_model.evaluate(common_x_val, common_y_val,
@@ -284,10 +284,14 @@ def train_models(dataset, lr, batch_size, max_epoch, verbose=2, return_model=Fal
                                                   verbose=0, batch_size=batch_size)
         if verbose > 0:
             print('Loss:', loss_val, 'Acc:', acc_val)
+    
+        return history
+
     if return_model:
         return common_model
     else:
         return (loss_train, acc_train), (loss_val, acc_val)
+
 
 
 # Best parameters i got are
@@ -297,27 +301,29 @@ def train_models(dataset, lr, batch_size, max_epoch, verbose=2, return_model=Fal
 # CARE: The image model is overfits with parameters used here
 
 e = 200
-history = train_models((X_angles, y_train, X_b, X_images), 5e-04, 32, e, 1, return_model=True)
-plt.plot(history['acc'])
-plt.plot(history['val_acc'])
+history = train_models((X_angles, y_train, X_b, X_images), 5e-04, 32, e, 1, return_model=False)
+#print "test results",history[0][0],history[0][1],history[1][0],history[1][1]
+
+plt.plot(history.history['acc'])
+plt.plot(history.history['val_acc'])
 plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig(str(e)+'_bestnetgraph.png')
+plt.savefig(str(e)+'_bestnetaccgraph.png')
 plt.clf()
 
 
 # summarize history for loss
-plt.plot(history['loss'])
-plt.plot(history['val_loss'])
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
 plt.title('model loss')
 plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 #plt.show()
 
-plt.savefig(str(e)+'_bestnetgraph.png')
+plt.savefig(str(e)+'_bestlossnetgraph.png')
 
 
 
