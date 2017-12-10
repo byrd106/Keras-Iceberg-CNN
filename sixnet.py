@@ -48,7 +48,7 @@ model.add(Dropout(0.2))
 model.add(Dense(200, activation="relu"))
 model.add(Dropout(0.2))
 model.add(Dense(1, activation="sigmoid"))
-optimizer = Adam(decay=0.001)
+optimizer = Adam(decay=0.01)
 model.compile(optimizer, "binary_crossentropy", metrics=["accuracy"])
 
 model.summary()
@@ -56,7 +56,7 @@ model.summary()
 #plot_model(model, to_file='ogmodel.png')
 
 #e = 150
-e = 200
+e = 400
 history = model.fit(X_train, y_train, validation_split=0.2,epochs=e)
 
 plt.plot(history.history['acc'])
@@ -65,7 +65,7 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig(str(e)+'_sixAccgraphLD.png')
+plt.savefig(str(e)+'_sixlongSmoothAccgraphLD.png')
 plt.clf()
 
 
@@ -78,7 +78,7 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 #plt.show()
 
-plt.savefig(str(e)+'_sixSmoothlossgraphLD.png')
+plt.savefig(str(e)+'_sixlongSmoothlossgraphLD.png')
 
 # this net gets about a .6558 on the leaderboard (1 EPOCH!!!) 
 
