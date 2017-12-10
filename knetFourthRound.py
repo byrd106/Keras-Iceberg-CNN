@@ -31,15 +31,15 @@ model = Sequential()
 
 model.add(Convolution2D(32, 3, activation="relu", input_shape=(75, 75, 2)))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
-model.add(Dropout(0.1))
+#model.add(Dropout(0.1))
 
 model.add(Convolution2D(32, 3, activation="relu", input_shape=(75, 75, 2)))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
-model.add(Dropout(0.1))
+#model.add(Dropout(0.1))
 
 model.add(Convolution2D(32, 3, activation="relu", input_shape=(75, 75, 2)))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
-model.add(Dropout(0.1))
+#model.add(Dropout(0.1))
 
 model.add(GlobalAveragePooling2D())
 
@@ -62,7 +62,7 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig(str(e)+'_FourthSmoothAccgraph.png')
+plt.savefig(str(e)+'_NoDrFourthSmoothAccgraph.png')
 plt.clf()
 
 
@@ -75,7 +75,7 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 #plt.show()
 
-plt.savefig(str(e)+'_FourthSmoothlossgraph.png')
+plt.savefig(str(e)+'_NoDRFourthSmoothlossgraph.png')
 
 # this net gets about a .6558 on the leaderboard (1 EPOCH!!!) 
 
