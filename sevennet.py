@@ -82,7 +82,7 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 #plt.show()
 
-plt.savefig(str(e)+'_sevennet.png')
+plt.savefig(str(e)+'_losssevennet.png')
 
 # this net gets about a .6558 on the leaderboard (1 EPOCH!!!) 
 
@@ -90,6 +90,8 @@ plt.savefig(str(e)+'_sevennet.png')
 
 # next round of testing: 
 # Test data
+
+'''
 x_band1 = np.array([np.array(band).astype(np.float32).reshape(75, 75) for band in test_df["band_1"]])
 x_band2 = np.array([np.array(band).astype(np.float32).reshape(75, 75) for band in test_df["band_2"]])
 X_test = np.concatenate([x_band1[:, :, :, np.newaxis], x_band2[:, :, :, np.newaxis]], axis=-1)
@@ -98,6 +100,6 @@ print("Xtest:", X_test.shape)
 prediction = model.predict(X_test, verbose=1)
 submit_df = pd.DataFrame({'id': test_df["id"], 'is_iceberg': prediction.flatten()})
 submit_df.to_csv("./sevennet_submission.csv", index=False)
-
+'''
 
 
