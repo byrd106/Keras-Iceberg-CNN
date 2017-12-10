@@ -52,7 +52,7 @@ model.summary()
 #plot_model(model, to_file='ogmodel.png')
 
 #e = 150
-e = 200
+e = 2
 history = model.fit(X_train, y_train, validation_split=0.2,epochs=e)
 
 plt.plot(history.history['acc'])
@@ -61,7 +61,7 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig(e+'_FourthAccgraph.png')
+plt.savefig(str(e)+'_FourthAccgraph.png')
 plt.clf()
 
 
@@ -74,7 +74,7 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 #plt.show()
 
-plt.savefig(e+'_Fourthlossgraph.png')
+plt.savefig(str(e)+'_Fourthlossgraph.png')
 
 # this net gets about a .6558 on the leaderboard (1 EPOCH!!!) 
 

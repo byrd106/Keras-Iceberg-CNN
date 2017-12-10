@@ -47,7 +47,7 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 #plt.show()
 
-plt.savefig(e+'_ThirdAccgraph.png')
+plt.savefig(str(e)+'_ThirdAccgraph.png')
 plt.clf()
 
 # summarize history for loss
@@ -59,7 +59,7 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 #plt.show()
 
-plt.savefig(e+'_Thirdlossgraph.png')
+plt.savefig(str(e)+'_Thirdlossgraph.png')
 
 
 # this net gets about a .6558 on the leaderboard (1 EPOCH!!!) 
