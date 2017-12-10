@@ -3,6 +3,7 @@ import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 import keras
 from keras.models import Sequential
 from keras.layers import Convolution2D, GlobalAveragePooling2D, Dense, Dropout, MaxPooling2D
+from keras.optimizers import Adam, SGD
 
 import matplotlib
 matplotlib.use('Agg')
