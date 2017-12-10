@@ -44,8 +44,8 @@ model.add(GlobalAveragePooling2D())
 
 #model.add(Dense(1, activation="relu"))
 model.add(Dense(1, activation="sigmoid"))
-
-model.compile("adam", "binary_crossentropy", metrics=["accuracy"])
+optimizer = Adam(decay=0.001)
+model.compile(optimizer, "binary_crossentropy", metrics=["accuracy"])
 
 model.summary()
 
@@ -61,7 +61,7 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig(str(e)+'_FourthAccgraph.png')
+plt.savefig(str(e)+'_FourthSmoothlossgraph.png')
 plt.clf()
 
 
@@ -74,7 +74,7 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 #plt.show()
 
-plt.savefig(str(e)+'_Fourthlossgraph.png')
+plt.savefig(str(e)+'_FourthSmoothlossgraph.png')
 
 # this net gets about a .6558 on the leaderboard (1 EPOCH!!!) 
 
