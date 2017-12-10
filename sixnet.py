@@ -65,7 +65,7 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig(str(e)+'_sixAccgraph.png')
+plt.savefig(str(e)+'_sixAccgraphLD.png')
 plt.clf()
 
 
@@ -78,7 +78,7 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 #plt.show()
 
-plt.savefig(str(e)+'_sixSmoothlossgraph.png')
+plt.savefig(str(e)+'_sixSmoothlossgraphLD.png')
 
 # this net gets about a .6558 on the leaderboard (1 EPOCH!!!) 
 
