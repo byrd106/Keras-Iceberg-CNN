@@ -3,6 +3,9 @@ import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 import keras
 from keras.models import Sequential
 from keras.layers import Convolution2D, GlobalAveragePooling2D, Dense, Dropout
+
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from keras.utils import plot_model
 
@@ -11,7 +14,7 @@ from tensorflow.python.client import device_lib
 
 
 train_df = pd.read_json("data/processed/train.json")
-test_df = pd.read_json("data/processed/test.json")
+#test_df = pd.read_json("data/processed/test.json")
 
 x_band1 = np.array([np.array(band).astype(np.float32).reshape(75, 75) for band in train_df["band_1"]])
 x_band2 = np.array([np.array(band).astype(np.float32).reshape(75, 75) for band in train_df["band_2"]])

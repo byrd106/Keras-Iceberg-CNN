@@ -3,7 +3,11 @@ import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 import keras
 from keras.models import Sequential
 from keras.layers import Convolution2D, GlobalAveragePooling2D, Dense, Dropout, MaxPooling2D
+
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+
 from keras.utils import plot_model
 
 from tensorflow.python.client import device_lib
@@ -13,7 +17,7 @@ from tensorflow.python.client import device_lib
 
 
 train_df = pd.read_json("data/processed/train.json")
-test_df = pd.read_json("data/processed/test.json")
+#test_df = pd.read_json("data/processed/test.json")
 
 x_band1 = np.array([np.array(band).astype(np.float32).reshape(75, 75) for band in train_df["band_1"]])
 
@@ -57,7 +61,7 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig(e+'_ThirdAccgraph.png')
+plt.savefig(e+'_FourthAccgraph.png')
 plt.clf()
 
 
@@ -70,7 +74,7 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 #plt.show()
 
-plt.savefig(e+'_Thirdlossgraph.png')
+plt.savefig(e+'_Fourthlossgraph.png')
 
 # this net gets about a .6558 on the leaderboard (1 EPOCH!!!) 
 
