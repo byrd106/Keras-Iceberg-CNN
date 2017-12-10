@@ -29,14 +29,6 @@ y_train = np.array(train_df["is_iceberg"])
 
 model = Sequential()
 
-model.add(Convolution2D(8, 3, activation="relu", input_shape=(75, 75, 2)))
-model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
-model.add(Dropout(0.2))
-
-model.add(Convolution2D(16, 3, activation="relu", input_shape=(75, 75, 2)))
-model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
-model.add(Dropout(0.2))
-
 model.add(Convolution2D(32, 3, activation="relu", input_shape=(75, 75, 2)))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
 model.add(Dropout(0.2))
@@ -46,6 +38,10 @@ model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_for
 model.add(Dropout(0.2))
 
 model.add(Convolution2D(128, 3, activation="relu"))
+model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
+model.add(Dropout(0.2))
+
+model.add(Convolution2D(256, 3, activation="relu"))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
 model.add(Dropout(0.2))
 
@@ -64,7 +60,7 @@ model.summary()
 #plot_model(model, to_file='ogmodel.png')
 
 #e = 150
-e = 400
+e = 1
 history = model.fit(X_train, y_train, validation_split=0.2,epochs=e)
 
 plt.plot(history.history['acc'])
