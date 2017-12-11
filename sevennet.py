@@ -43,7 +43,7 @@ print y_train.shape
 
 model = Sequential()
 
-model.add(Convolution2D(32, 3, activation="relu", input_shape=(75, 75, 2)))
+model.add(Convolution2D(64, 3, activation="relu", input_shape=(75, 75, 2)))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
 model.add(Dropout(0.2))
 
@@ -51,7 +51,7 @@ model.add(Convolution2D(64, 3, activation="relu"))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
 model.add(Dropout(0.2))
 
-model.add(Convolution2D(128, 3, activation="relu"))
+model.add(Convolution2D(256, 3, activation="relu"))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
 model.add(Dropout(0.2))
 
@@ -61,6 +61,8 @@ model.add(Dropout(0.2))
 
 model.add(GlobalAveragePooling2D())
 
+model.add(Dense(200, activation="relu"))
+model.add(Dropout(0.2))
 model.add(Dense(200, activation="relu"))
 model.add(Dropout(0.2))
 model.add(Dense(100, activation="relu"))
@@ -74,7 +76,7 @@ model.summary()
 #plot_model(model, to_file='ogmodel.png')
 
 #e = 150
-e = 400
+e = 1
 history = model.fit(X_train, y_train, validation_split=0.2,epochs=e)
 
 plt.plot(history.history['acc'])
@@ -83,7 +85,7 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig(str(e)+'_SEVEN_ACC_IMAGES.png')
+plt.savefig(str(e)+'_BIGGERSEVEN_ACC_IMAGES.png')
 plt.clf()
 
 
@@ -96,7 +98,7 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 #plt.show()
 
-plt.savefig(str(e)+'_SEVEN_LOSS_IMAGES.png')
+plt.savefig(str(e)+'_BIGGERSEVEN_LOSS_IMAGES.png')
 
 # this net gets about a .6558 on the leaderboard (1 EPOCH!!!) 
 
@@ -105,7 +107,7 @@ plt.savefig(str(e)+'_SEVEN_LOSS_IMAGES.png')
 # next round of testing: 
 # Test data
 
-
+''' 
 x_band1 = np.array([np.array(band).astype(np.float32).reshape(75, 75) for band in test_df["band_1"]])
 x_band2 = np.array([np.array(band).astype(np.float32).reshape(75, 75) for band in test_df["band_2"]])
 X_test = np.concatenate([x_band1[:, :, :, np.newaxis], x_band2[:, :, :, np.newaxis]], axis=-1)
@@ -114,6 +116,6 @@ print("Xtest:", X_test.shape)
 prediction = model.predict(X_test, verbose=1)
 submit_df = pd.DataFrame({'id': test_df["id"], 'is_iceberg': prediction.flatten()})
 submit_df.to_csv("./MOREIMAGESsevennet_submission.csv", index=False)
-
+''' 
 
 
