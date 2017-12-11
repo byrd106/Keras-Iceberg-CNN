@@ -28,8 +28,17 @@ y_train = np.array(train_df["is_iceberg"])
 datagen = ImageDataGenerator(horizontal_flip=True, vertical_flip=True) 
 datagen.fit(X_train)
 results = datagen.flow(X_train,y_train,batch_size=600)
-X_train = np.append(X_train,results[0][0],axis=0)
-y_train = np.append(y_train,results[0][1])
+
+newImages = []
+for k in results:
+	newImages = k
+	break
+
+X_train = np.append(X_train,newImages[0],axis=0)
+y_train = np.append(y_train,newImages[1])
+
+print X_train.shape 
+print y_train.shape
 
 
 model = Sequential()
