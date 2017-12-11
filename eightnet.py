@@ -35,26 +35,26 @@ y_train = np.array(train_df["is_iceberg"])
 model = Sequential()
 
 model.add(Convolution2D(32, 3, activation="relu", input_shape=(75, 75, 2)))
-model.add(Dropout(0.5))
+model.add(Dropout(0.3))
 #model.add(Convolution2D(32, 3, activation="relu", input_shape=(75, 75, 2)))
 #model.add(Dropout(0.2))
 model.add(Convolution2D(32, 3, activation="relu", input_shape=(75, 75, 2)))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
-model.add(Dropout(0.5))
+model.add(Dropout(0.3))
 
 model.add(Convolution2D(64, 3, activation="relu"))
-model.add(Dropout(0.5))
+model.add(Dropout(0.2))
 #model.add(Convolution2D(64, 3, activation="relu"))
 #model.add(Dropout(0.2))
 model.add(Convolution2D(64, 3, activation="relu"))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
-model.add(Dropout(0.5))
+model.add(Dropout(0.2))
 
 #model.add(Convolution2D(128, 3, activation="relu"))
 #model.add(Dropout(0.2))
 model.add(Convolution2D(128, 3, activation="relu"))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
-model.add(Dropout(0.5))
+model.add(Dropout(0.2))
 
 model.add(Convolution2D(256, 3, activation="relu"))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
@@ -68,9 +68,9 @@ model.add(GlobalAveragePooling2D())
 model.add(Dense(200, activation="relu"))
 model.add(Dropout(0.2))
 model.add(Dense(100, activation="relu"))
-model.add(Dropout(0.2))
+model.add(Dropout(0.3))
 model.add(Dense(50, activation="relu"))
-model.add(Dropout(0.2))
+model.add(Dropout(0.3))
 model.add(Dense(1, activation="sigmoid"))
 optimizer = Adam(decay=0.01)
 model.compile(optimizer, "binary_crossentropy", metrics=["accuracy"])
@@ -83,7 +83,7 @@ model.summary()
 
 
 #e = 150
-e = 400
+e = 100
 history = model.fit(X_train, y_train, validation_split=0.2,epochs=e)
 
 plt.plot(history.history['acc'])
@@ -92,7 +92,7 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig(str(e)+'_eightDPOUTmodacc.png')
+plt.savefig(str(e)+'_eightlessdrmodacc.png')
 plt.clf()
 
 
@@ -105,7 +105,7 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 #plt.show()
 
-plt.savefig(str(e)+'_eightDPOUTmodloss.png')
+plt.savefig(str(e)+'_eightlessdrmodloss.png')
 
 # this net gets about a .6558 on the leaderboard (1 EPOCH!!!) 
 
