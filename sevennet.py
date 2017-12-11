@@ -4,17 +4,15 @@ import keras
 from keras.models import Sequential
 from keras.layers import Convolution2D, GlobalAveragePooling2D, Dense, Dropout, MaxPooling2D
 from keras.optimizers import Adam, SGD
+from keras.preprocessing.image import ImageDataGenerator
 
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 from keras.utils import plot_model
-
 from tensorflow.python.client import device_lib
 #print(device_lib.list_local_devices())
-
-
 
 
 train_df = pd.read_json("data/processed/train.json")
@@ -26,6 +24,13 @@ x_band1 = np.array([np.array(band).astype(np.float32).reshape(75, 75) for band i
 x_band2 = np.array([np.array(band).astype(np.float32).reshape(75, 75) for band in train_df["band_2"]])
 X_train = np.concatenate([x_band1[:, :, :, np.newaxis], x_band2[:, :, :, np.newaxis]], axis=-1)
 y_train = np.array(train_df["is_iceberg"])
+
+datagen = ImageDataGenerator(horizontal_flip=True, vertical_flip=True) 
+datagen.fit(X_train)
+results = datagen.flow(X_train,y_train,batch_size=600)
+X_train = np.append(X_train,results[0][0],axis=0)
+y_train = np.append(y_train,results[0][1])
+
 
 model = Sequential()
 
@@ -60,7 +65,7 @@ model.summary()
 #plot_model(model, to_file='ogmodel.png')
 
 #e = 150
-e = 400
+e = 1
 history = model.fit(X_train, y_train, validation_split=0.2,epochs=e)
 
 plt.plot(history.history['acc'])
@@ -69,7 +74,7 @@ plt.title('model accuracy')
 plt.ylabel('accuracy')
 plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
-plt.savefig(str(e)+'_sevennet.png')
+plt.savefig(str(e)+'_SEVEN_ACC_IMAGES.png')
 plt.clf()
 
 
@@ -82,7 +87,7 @@ plt.xlabel('epoch')
 plt.legend(['train', 'test'], loc='upper left')
 #plt.show()
 
-plt.savefig(str(e)+'_losssevennet.png')
+plt.savefig(str(e)+'_SEVEN_LOSS_IMAGES.png')
 
 # this net gets about a .6558 on the leaderboard (1 EPOCH!!!) 
 
