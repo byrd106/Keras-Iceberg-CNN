@@ -66,11 +66,11 @@ model.add(GlobalAveragePooling2D())
 #model.add(Dense(300, activation="relu"))
 #model.add(Dropout(0.2))
 model.add(Dense(200, activation="relu"))
-model.add(Dropout(0.2))
+model.add(Dropout(0.3))
 model.add(Dense(100, activation="relu"))
-model.add(Dropout(0.2))
+model.add(Dropout(0.3))
 model.add(Dense(50, activation="relu"))
-model.add(Dropout(0.2))
+model.add(Dropout(0.3))
 model.add(Dense(1, activation="sigmoid"))
 optimizer = Adam(decay=0.01)
 model.compile(optimizer, "binary_crossentropy", metrics=["accuracy"])
@@ -83,7 +83,7 @@ model.summary()
 
 
 #e = 150
-e = 100
+e = 400
 history = model.fit(X_train, y_train, validation_split=0.2,epochs=e)
 
 plt.plot(history.history['acc'])
