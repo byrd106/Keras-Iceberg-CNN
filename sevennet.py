@@ -74,7 +74,7 @@ model.summary()
 #plot_model(model, to_file='ogmodel.png')
 
 #e = 150
-e = 1
+e = 100
 history = model.fit(X_train, y_train, validation_split=0.2,epochs=e)
 
 plt.plot(history.history['acc'])
