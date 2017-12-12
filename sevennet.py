@@ -75,11 +75,16 @@ model.summary()
 
 #plot_model(model, to_file='ogmodel.png')
 
-e = 200
+e = 2
 #e = 1
-history = model.fit(X_train, y_train, validation_split=0.2,epochs=e)
 
-netname = "SevenBaselineDR4fullconnect"
+
+tbCallBack = keras.callbacks.TensorBoard(log_dir='./Graph', histogram_freq=0, write_graph=True, write_images=True)
+
+history = model.fit(X_train, y_train, validation_split=0.2,epochs=e,callbacks=[tbCallBack])
+
+
+netname = "SevenBaselineDR4HHfullconnect"
 savePlot("A",history,netname,e)
 savePlot("L",history,netname,e)
 
