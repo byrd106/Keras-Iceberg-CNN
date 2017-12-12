@@ -5,6 +5,7 @@ from keras.models import Sequential
 from keras.layers import Convolution2D, GlobalAveragePooling2D, Dense, Dropout, MaxPooling2D
 from keras.optimizers import Adam, SGD
 from keras.preprocessing.image import ImageDataGenerator
+from helpers import *
 
 import matplotlib
 matplotlib.use('Agg')
@@ -25,17 +26,16 @@ x_band2 = np.array([np.array(band).astype(np.float32).reshape(75, 75) for band i
 X_train = np.concatenate([x_band1[:, :, :, np.newaxis], x_band2[:, :, :, np.newaxis]], axis=-1)
 y_train = np.array(train_df["is_iceberg"])
 
-datagen = ImageDataGenerator(horizontal_flip=True, vertical_flip=True) 
-datagen.fit(X_train)
-results = datagen.flow(X_train,y_train,batch_size=2000)
+# datagen = ImageDataGenerator(horizontal_flip=True, vertical_flip=True) 
+# datagen.fit(X_train)
+# results = datagen.flow(X_train,y_train,batch_size=2000)
+# newImages = []
+# for k in results:
+# 	newImages = k
+# 	break
 
-newImages = []
-for k in results:
-	newImages = k
-	break
-
-X_train = np.append(X_train,newImages[0],axis=0)
-y_train = np.append(y_train,newImages[1])
+# X_train = np.append(X_train,newImages[0],axis=0)
+# y_train = np.append(y_train,newImages[1])
 
 print X_train.shape 
 print y_train.shape
@@ -76,29 +76,12 @@ model.summary()
 #plot_model(model, to_file='ogmodel.png')
 
 #e = 150
-e = 100
+e = 1
 history = model.fit(X_train, y_train, validation_split=0.2,epochs=e)
 
-plt.plot(history.history['acc'])
-plt.plot(history.history['val_acc'])
-plt.title('model accuracy')
-plt.ylabel('accuracy')
-plt.xlabel('epoch')
-plt.legend(['train', 'test'], loc='upper left')
-plt.savefig(str(e)+'_aBIGGERSEVEN_ACC_IMAGES.png')
-plt.clf()
-
-
-# summarize history for loss
-plt.plot(history.history['loss'])
-plt.plot(history.history['val_loss'])
-plt.title('model loss')
-plt.ylabel('loss')
-plt.xlabel('epoch')
-plt.legend(['train', 'test'], loc='upper left')
-#plt.show()
-
-plt.savefig(str(e)+'_aBIGGERSEVEN_LOSS_IMAGES.png')
+netname = "SevenBaseline"
+savePlot("A",history,netname,e)
+savePlot("L",history,netname,e)
 
 # this net gets about a .6558 on the leaderboard (1 EPOCH!!!) 
 
@@ -108,14 +91,14 @@ plt.savefig(str(e)+'_aBIGGERSEVEN_LOSS_IMAGES.png')
 # Test data
 
  
-x_band1 = np.array([np.array(band).astype(np.float32).reshape(75, 75) for band in test_df["band_1"]])
-x_band2 = np.array([np.array(band).astype(np.float32).reshape(75, 75) for band in test_df["band_2"]])
-X_test = np.concatenate([x_band1[:, :, :, np.newaxis], x_band2[:, :, :, np.newaxis]], axis=-1)
-print("Xtest:", X_test.shape)
+# x_band1 = np.array([np.array(band).astype(np.float32).reshape(75, 75) for band in test_df["band_1"]])
+# x_band2 = np.array([np.array(band).astype(np.float32).reshape(75, 75) for band in test_df["band_2"]])
+# X_test = np.concatenate([x_band1[:, :, :, np.newaxis], x_band2[:, :, :, np.newaxis]], axis=-1)
+# print("Xtest:", X_test.shape)
 
-prediction = model.predict(X_test, verbose=1)
-submit_df = pd.DataFrame({'id': test_df["id"], 'is_iceberg': prediction.flatten()})
-submit_df.to_csv("./HeyMOREIMAGESsevennet_submission.csv", index=False)
+# prediction = model.predict(X_test, verbose=1)
+# submit_df = pd.DataFrame({'id': test_df["id"], 'is_iceberg': prediction.flatten()})
+# submit_df.to_csv("./HeyMOREIMAGESsevennet_submission.csv", index=False)
  
 
 
