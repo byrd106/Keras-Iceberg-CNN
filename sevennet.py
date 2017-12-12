@@ -75,8 +75,8 @@ model.summary()
 
 #plot_model(model, to_file='ogmodel.png')
 
-#e = 150
-e = 1
+e = 200
+#e = 1
 history = model.fit(X_train, y_train, validation_split=0.2,epochs=e)
 
 netname = "SevenBaseline"
