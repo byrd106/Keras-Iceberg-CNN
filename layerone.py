@@ -7,6 +7,8 @@ from keras.optimizers import Adam, SGD
 from keras.preprocessing.image import ImageDataGenerator
 from helpers import *
 
+
+import sys
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
@@ -75,14 +77,16 @@ model.summary()
 
 #plot_model(model, to_file='ogmodel.png')
 
-e = 800
+e = int(sys.argv[2])
 #e = 1
 
 #tbCallBack = keras.callbacks.TensorBoard(log_dir='./Graph', histogram_freq=0, write_graph=True, write_images=True)
 
-history = model.fit(X_train, y_train, validation_split=0.2,epochs=e,callbacks=[tbCallBack])
+history = model.fit(X_train, y_train, validation_split=0.2,epochs=e)
+#,callbacks=[tbCallBack])
 
-netname = "LayerSetOne"
+netname = sys.argv[1]
+print netname
 savePlot("A",history,netname,e)
 savePlot("L",history,netname,e)
 
