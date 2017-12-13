@@ -49,6 +49,10 @@ model.add(Convolution2D(64, 3, activation="relu", input_shape=(75, 75, 2)))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
 model.add(Dropout(0.2))
 
+model.add(Convolution2D(64, 3, activation="relu", input_shape=(75, 75, 2)))
+model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
+model.add(Dropout(0.2))
+
 # model.add(Convolution2D(64, 3, activation="relu"))
 # model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
 # model.add(Dropout(0.2))
