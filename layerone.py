@@ -45,7 +45,7 @@ print y_train.shape
 
 model = Sequential()
 
-model.add(Convolution2D(64, 3, activation="relu", input_shape=(75, 75, 2)))
+model.add(Convolution2D(32, 3, activation="relu", input_shape=(75, 75, 2)))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
 model.add(Dropout(0.2))
 
@@ -53,30 +53,22 @@ model.add(Convolution2D(64, 3, activation="relu", input_shape=(75, 75, 2)))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
 model.add(Dropout(0.2))
 
-# model.add(Convolution2D(64, 3, activation="relu"))
-# model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
-# model.add(Dropout(0.2))
+model.add(Convolution2D(64, 3, activation="relu"))
+model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
+model.add(Dropout(0.2))
 
-# model.add(Convolution2D(256, 3, activation="relu"))
-# model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
-# model.add(Dropout(0.2))
-
-# model.add(Convolution2D(256, 3, activation="relu"))
-# model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
-# model.add(Dropout(0.2))
+model.add(Convolution2D(128, 3, activation="relu"))
+model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
+model.add(Dropout(0.2))
 
 model.add(GlobalAveragePooling2D())
 
-# model.add(Dense(200, activation="relu"))
-# model.add(Dropout(0.4))
-# model.add(Dense(200, activation="relu"))
-# model.add(Dropout(0.4))
-model.add(Dense(100, activation="relu"))
-model.add(Dropout(0.4))
+model.add(Dense(200, activation="relu"))
+model.add(Dropout(0.2))
+model.add(Dense(200, activation="relu"))
+model.add(Dropout(0.2))
 model.add(Dense(1, activation="sigmoid"))
 optimizer = Adam(decay=0.01)
-model.compile(optimizer, "binary_crossentropy", metrics=["accuracy"])
-
 model.summary()
 
 #plot_model(model, to_file='ogmodel.png')
