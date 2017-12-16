@@ -69,6 +69,9 @@ model.add(Dense(200, activation="relu"))
 model.add(Dropout(0.2))
 model.add(Dense(1, activation="sigmoid"))
 optimizer = Adam(decay=0.01)
+model.compile(optimizer, "binary_crossentropy", metrics=["accuracy"])
+
+
 model.summary()
 
 #plot_model(model, to_file='ogmodel.png')
