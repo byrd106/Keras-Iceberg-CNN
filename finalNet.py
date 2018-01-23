@@ -46,9 +46,13 @@ model.add(Convolution2D(128, 3, activation="relu"))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
 model.add(Dropout(0.2))
 
+model.add(Convolution2D(256, 3, activation="relu"))
+model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
+model.add(Dropout(0.2))
+
 model.add(GlobalAveragePooling2D())
 
-model.add(Dense(200, activation="relu"))
+model.add(Dense(300, activation="relu"))
 model.add(Dropout(0.2))
 model.add(Dense(200, activation="relu"))
 model.add(Dropout(0.2))
