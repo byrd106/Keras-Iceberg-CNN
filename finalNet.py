@@ -3,7 +3,7 @@ import numpy as np # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 import keras
 from keras.models import Sequential
-from keras.layers import Convolution2D, GlobalAveragePooling2D, Dense, Dropout, MaxPooling2D
+from keras.layers import Conv2D, GlobalAveragePooling2D, Dense, Dropout, MaxPooling2D, Flatten
 from keras.optimizers import Adam, SGD
 
 import matplotlib
@@ -32,52 +32,40 @@ y_train = np.array(train_df["is_iceberg"])
 
 #exit()
 
-model = Sequential()
+model=Sequential()
 
-'''
-gmodel.add(Conv2D(64, kernel_size=(3, 3),activation='relu', input_shape=(75, 75, 3)))
-    gmodel.add(MaxPooling2D(pool_size=(3, 3), strides=(2, 2)))
-    gmodel.add(Dropout(0.2))
-
-    #Conv Layer 2
-    gmodel.add(Conv2D(128, kernel_size=(3, 3), activation='relu' ))
-    gmodel.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-    gmodel.add(Dropout(0.2))
-
-    #Conv Layer 3
-    gmodel.add(Conv2D(128, kernel_size=(3, 3), activation='relu'))
-    gmodel.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-    gmodel.add(Dropout(0.2))
-
-    #Conv Layer 4
-    gmodel.add(Conv2D(64, kernel_size=(3, 3), activation='relu'))
-    gmodel.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-    gmodel.add(Dropout(0.2))
-'''
-
-model.add(Convolution2D(64, kernel_size=(3, 3), activation="relu", input_shape=(75, 75, 3)))
+# Conv block 1
+model.add(Conv2D(64, kernel_size=(3, 3),activation='relu', input_shape=(75, 75, 2)))
+model.add(Conv2D(64, kernel_size=(3, 3), activation='relu' ))
+model.add(Conv2D(64, kernel_size=(3, 3), activation='relu' ))
 model.add(MaxPooling2D(pool_size=(3, 3), strides=(2, 2)))
-model.add(Dropout(0.2))
 
-model.add(Convolution2D(128, kernel_size=(3, 3), activation='relu' ))
+# Conv block 2
+model.add(Conv2D(128, kernel_size=(3, 3), activation='relu' ))
+model.add(Conv2D(128, kernel_size=(3, 3), activation='relu' ))
+model.add(Conv2D(128, kernel_size=(3, 3), activation='relu' ))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-model.add(Dropout(0.2))
 
-model.add(Convolution2D(128, kernel_size=(3, 3), activation='relu'))
+# Conv block 3
+model.add(Conv2D(128, kernel_size=(3, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
-model.add(Dropout(0.2))
 
-model.add(Convolution2D(64, kernel_size=(3, 3), activation='relu'))
+#Conv block 4
+model.add(Conv2D(256, kernel_size=(3, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+# Flatten before dense
+model.add(Flatten())
+
+#Dense 1
+model.add(Dense(1024, activation='relu'))
+model.add(Dropout(0.4))
+
+#Dense 2
+model.add(Dense(512, activation='relu'))
 model.add(Dropout(0.2))
 
-
-model.add(GlobalAveragePooling2D())
-
-model.add(Dense(512, activation="relu"))
-model.add(Dropout(0.2))
-model.add(Dense(256, activation="relu"))
-model.add(Dropout(0.2))
+# Output 
 model.add(Dense(1, activation="sigmoid"))
 optimizer = Adam(decay=0.01)
 model.compile(optimizer, "binary_crossentropy", metrics=["accuracy"])
