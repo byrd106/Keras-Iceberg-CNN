@@ -45,14 +45,17 @@ model.add(Conv2D(128, kernel_size=(3, 3), activation='relu' ))
 model.add(Conv2D(128, kernel_size=(3, 3), activation='relu' ))
 model.add(Conv2D(128, kernel_size=(3, 3), activation='relu' ))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+model.add(Dropout(0.2))
 
 # Conv block 3
 model.add(Conv2D(128, kernel_size=(3, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+model.add(Dropout(0.2))
 
 #Conv block 4
 model.add(Conv2D(256, kernel_size=(3, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+model.add(Dropout(0.2))
 
 # Flatten before dense
 model.add(Flatten())
