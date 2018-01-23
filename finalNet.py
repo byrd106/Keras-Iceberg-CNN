@@ -34,31 +34,55 @@ y_train = np.array(train_df["is_iceberg"])
 
 model = Sequential()
 
-model.add(Convolution2D(32, 3, activation="relu", input_shape=(75, 75, 2)))
-model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
+'''
+gmodel.add(Conv2D(64, kernel_size=(3, 3),activation='relu', input_shape=(75, 75, 3)))
+    gmodel.add(MaxPooling2D(pool_size=(3, 3), strides=(2, 2)))
+    gmodel.add(Dropout(0.2))
 
-model.add(Convolution2D(64, 3, activation="relu"))
-model.add(Convolution2D(64, 3, activation="relu"))
-model.add(Convolution2D(64, 3, activation="relu"))
-model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
+    #Conv Layer 2
+    gmodel.add(Conv2D(128, kernel_size=(3, 3), activation='relu' ))
+    gmodel.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+    gmodel.add(Dropout(0.2))
 
+    #Conv Layer 3
+    gmodel.add(Conv2D(128, kernel_size=(3, 3), activation='relu'))
+    gmodel.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+    gmodel.add(Dropout(0.2))
 
-model.add(Convolution2D(128, 3, activation="relu"))
-model.add(Convolution2D(128, 3, activation="relu"))
-model.add(Convolution2D(128, 3, activation="relu"))
-model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
+    #Conv Layer 4
+    gmodel.add(Conv2D(64, kernel_size=(3, 3), activation='relu'))
+    gmodel.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+    gmodel.add(Dropout(0.2))
+'''
 
-model.add(Convolution2D(256, 3, activation="relu"))
-model.add(Convolution2D(256, 3, activation="relu"))
-model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
+model.add(Convolution2D(64, kernel_size=(3, 3), activation="relu", input_shape=(75, 75, 3)))
+model.add(MaxPooling2D(pool_size=(3, 3), strides=(2, 2)))
 model.add(Dropout(0.2))
+
+model.add(Conv2D(128, kernel_size=(3, 3), activation='relu' ))
+model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+model.add(Dropout(0.2))
+
+model.add(Conv2D(128, kernel_size=(3, 3), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+model.add(Dropout(0.2))
+
+model.add(Conv2D(64, kernel_size=(3, 3), activation='relu'))
+model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+model.add(Dropout(0.2))
+
+model.add(Convolution2D(64, 3, activation="relu"))
+model.add(Convolution2D(64, 3, activation="relu"))
+model.add(Convolution2D(64, 3, activation="relu"))
+model.add(MaxPooling2D(pool_size=(2, 2), strides=None, padding='valid', data_format=None))
+
 
 model.add(GlobalAveragePooling2D())
 
-model.add(Dense(1024, activation="relu"))
-model.add(Dropout(0.3))
 model.add(Dense(512, activation="relu"))
-model.add(Dropout(0.3))
+model.add(Dropout(0.2))
+model.add(Dense(256, activation="relu"))
+model.add(Dropout(0.2))
 model.add(Dense(1, activation="sigmoid"))
 optimizer = Adam(decay=0.01)
 model.compile(optimizer, "binary_crossentropy", metrics=["accuracy"])
