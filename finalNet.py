@@ -23,8 +23,8 @@ train_df = pd.read_json("data/processed/train.json")
 #test_df = pd.read_json("data/processed/test.json")
 
 
-normalize = True
-if normalize: 
+anormalize = True
+if anormalize: 
 	print "NORMALIZE"
 	x_band1 = np.array([normalize(np.array(band).astype(np.float32).reshape(75, 75),norm='l2') for band in train_df["band_1"]])
 	x_band2 = np.array([normalize(np.array(band).astype(np.float32).reshape(75, 75),norm='l2') for band in train_df["band_2"]])
